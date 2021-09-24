@@ -3,7 +3,7 @@ var app = express();
 
 var path = require("path");
 
-var HTTP_PORT = process.env.PORT || 8080;5
+var HTTP_PORT = process.env.PORT || 8080;
 
 // function wil be called after the start of http server for listening for requests
 function onHttpStart(){

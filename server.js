@@ -12,7 +12,7 @@ function onHttpStart(){
 
 // setup root to listen on the default url part 
 app.get("/", function(request, response){
-    response.send("Hello world <br/> <a href='/about/'> Go to About Page </a>");
+    response.sendFile(path.join(__dirname,"/views/home.html"));
 });
 
 // set up another route for the about page

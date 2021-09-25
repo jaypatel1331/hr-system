@@ -41,7 +41,6 @@ app.get("/employees", function(request,response) {
     
 });
 
-
 app.get("/managers", function(request,response) {
     data.getManagers()
     .then(function(data) {

@@ -1,3 +1,16 @@
+/*********************************************************************************
+*  WEB322 – Assignment 02
+*  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part *  of this assignment has been copied manually or electronically from any other source
+*  (including 3rd party web sites) or distributed to other students.
+*
+*  Name: Jay Ashishbhai Patel
+*  Student ID: 154925192
+*  Date: 24 September 2021
+*
+*  Online (Heroku) Link: 
+*
+********************************************************************************/
+
 var data = require('./data-service.js')
 var express = require("express");
 var app = express();

@@ -18,12 +18,12 @@ app.get("/about", function(request, response){
 
 
 app.get("/employees", function(request,response) {
-    data.getEmployees()
-    .then(function(value) {
-        response.json(value);
+    data.getAllEmployees()
+    .then(function(data) {
+        response.json(data);
     })
-    .catch(function(error) {
-        response.json({message: error});
+    .catch(function(err) {
+        response.json({message: err});
     });
     
 });
@@ -31,22 +31,22 @@ app.get("/employees", function(request,response) {
 
 app.get("/managers", function(request,response) {
     data.getManagers()
-    .then(function(value) {
-        response.json(value);
+    .then(function(data) {
+        response.json(data);
     })
-    .catch(function(error) {
-        response.json({message: error});
+    .catch(function(err) {
+        response.json({message: err});
     });
 });
 
 
 app.get("/departments", function(request,response) {
     data.getDepartments()
-    .then(function(value) {
-        response.json(value);
+    .then(function(data) {
+        response.json(data);
     })
-    .catch(function(error) {
-        response.json({message: error});
+    .catch(function(err) {
+        response.json({message: err});
     });
 });
 
@@ -61,6 +61,6 @@ data.initialize()
     console.log(message);
     app.listen(HTTP_PORT);
 })
-.catch(function(error) {
-    console.log(error);
+.catch(function(err) {
+    console.log(err);
 });

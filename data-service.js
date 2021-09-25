@@ -6,22 +6,29 @@ var departments = [];
 
 module.exports = {
 
-    initialize: function() {
-        let promise = new Promise(function(resolve, reject) {
-            
-            fs.readFile('./data/employees.json','utf8',(err,data) => {
-                if (err) {
+    initialize: function() 
+    {
+        let promise = new Promise(function(resolve, reject) 
+        {
+            fs.readFile('./data/employees.json','utf8',(err,data) => 
+            {
+                if (err) 
+                {
                     reject("Error! employees.json could not be loaded!");
-                } else {
-
+                }
+                 else 
+                {
                     employees = JSON.parse(data);
                     console.log("Succuss! employees.json loaded!");
 
-                    fs.readFile('./data/departments.json','utf8',(err,data) => {
-                        if (err) {
+                    fs.readFile('./data/departments.json','utf8',(err,data) => 
+                    {
+                        if (err) 
+                        {
                             reject("Error! departments.json could not be loaded!");
-                        } else {
-
+                        } 
+                        else
+                        {
                             departments = JSON.parse(data);
                             console.log("Succuss! departments.json loaded!");
                             resolve('Server initialization successful!');
@@ -29,19 +36,21 @@ module.exports = {
                     });
                 }
             });
-
-
-
         });
 
         return promise;
     },
 
-    getEmployees: function() {
-        let promise = new Promise(function(resolve,reject) {
-            if (employees.length > 0) {
+    getAllEmployees: function() 
+    {
+        let promise = new Promise(function(resolve,reject) 
+        {
+            if (employees.length > 0) 
+            {
                 resolve(employees);
-            } else {
+            } 
+            else
+            {
                 reject('No results returned!');
             }
         });
@@ -49,18 +58,22 @@ module.exports = {
         return promise;
     },
     
-    getManagers: function() {
+    getManagers: function() 
+    {
         let managers = []; 
-        let promise = new Promise(function(resolve, reject) {
+        let promise = new Promise(function(resolve, reject) 
+        {
+            for (let j = 0; j < employees.length; j++) 
+            {
+                if (employees[j].isManager == true)
+                    managers.push(employees[j]);
 
-            for (let i = 0; i < employees.length; i++) {
-
-                if (employees[i].isManager == true)
-                    managers.push(employees[i]);
-
-                if (managers.length > 0) {
+                if (managers.length > 0) 
+                {
                     resolve(managers);
-                } else {
+                }
+                 else
+                 {
                     reject("No results returned!");
                 }
             }
@@ -69,11 +82,16 @@ module.exports = {
         return promise;
     },
     
-    getDepartments: function() {
-        let promise = new Promise(function(resolve,reject) {
-            if (departments.length > 0) {
+    getDepartments: function() 
+    {
+        let promise = new Promise(function(resolve,reject) 
+        {
+            if (departments.length > 0) 
+            {
                 resolve(departments);
-            } else {
+            } 
+            else 
+            {
                 reject("No results returned");
             }
         });

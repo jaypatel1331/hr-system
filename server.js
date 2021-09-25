@@ -17,7 +17,6 @@ var app = express();
 var path = require("path");
 var HTTP_PORT = process.env.PORT || 8080;
 
-app.use(express.static('public'));
 
 
 app.get("/", function(request, response)
@@ -72,6 +71,9 @@ app.get("/departments", function(request,response)
         response.json({message: err});
     });
 });
+
+
+app.use(express.static('public'));
 
 
 app.use(function(request,response,next) 

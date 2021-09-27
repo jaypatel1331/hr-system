@@ -5,13 +5,13 @@
 *
 *  Name: Jay Ashishbhai Patel
 *  Student ID: 154925192
-*  Date: 24 September 2021
+*  Date: 27 September 2021
 *
 *  Online (Heroku) Link: https://stark-harbor-91923.herokuapp.com/ 
 *
 ********************************************************************************/
 
-var data = require('./data-service.js')
+var data = require('./data-service.js');
 var express = require("express");
 var app = express();
 var path = require("path");
@@ -19,56 +19,56 @@ var HTTP_PORT = process.env.PORT || 8080;
 
 
 
-app.get("/", function(request, response)
+app.get("/", function(req, res)
 {
-    response.sendFile(path.join(__dirname,"/views/home.html"));
+    res.sendFile(path.join(__dirname,"/views/home.html"));
 });
 
 
-app.get("/about", function(request, response)
+app.get("/about", function(req, res)
 {
-    response.sendFile(path.join(__dirname,"/views/about.html"));
+    res.sendFile(path.join(__dirname,"/views/about.html"));
 });
 
 
-app.get("/employees", function(request,response)
+app.get("/employees", function(req,res)
  {
     data.getAllEmployees()
     .then(function(data) 
     {
-        response.json(data);
+        res.json(data);
     })
     .catch(function(err) 
     {
-        response.json({message: err});
+        res.json({message: err});
     });
     
 });
 
-app.get("/managers", function(request,response) 
+app.get("/managers", function(req,res) 
 {
     data.getManagers()
     .then(function(data) 
     {
-        response.json(data);
+        res.json(data);
     })
     .catch(function(err) 
     {
-        response.json({message: err});
+        res.json({message: err});
     });
 });
 
 
-app.get("/departments", function(request,response) 
+app.get("/departments", function(req,res) 
 {
     data.getDepartments()
     .then(function(data) 
     {
-        response.json(data);
+        res.json(data);
     })
     .catch(function(err) 
     {
-        response.json({message: err});
+        res.json({message: err});
     });
 });
 
@@ -76,9 +76,9 @@ app.get("/departments", function(request,response)
 app.use(express.static('public'));
 
 
-app.use(function(request,response,next) 
+app.use(function(req,res,next) 
 {
-    response.status(404).send('Page not found, yo. 404');
+    res.status(404).send('Page not found, Error: 404');
 });
 
 

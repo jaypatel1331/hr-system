@@ -14,7 +14,7 @@ module.exports = {
             {
                 if (err) 
                 {
-                    reject("Error! employees.json could not be loaded!");
+                    reject("Error! unable to load file 'Employees.json'.");
                 }
                  else 
                 {
@@ -25,7 +25,7 @@ module.exports = {
                     {
                         if (err) 
                         {
-                            reject("Error! departments.json could not be loaded!");
+                            reject("Error! unable to load file 'Departments.json'.");
                         } 
                         else
                         {
@@ -66,6 +66,7 @@ module.exports = {
             for (let j = 0; j < employees.length; j++) 
             {
                 if (employees[j].isManager == true)
+                {
                     managers.push(employees[j]);
 
                 if (managers.length > 0) 
@@ -75,6 +76,7 @@ module.exports = {
                  else
                  {
                     reject("No results returned!");
+                }
                 }
             }
         });

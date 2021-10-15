@@ -115,13 +115,13 @@ const storage = multer.diskStorage({
 
   const upload = multer({ storage: storage });
 
-  app.post('/images/add', upload.single("imageFile"), (req, res) => {
+  app.post('/images/add', upload.single("imageFile"), function(req, res){
       res.redirect("/images");
   });
 
 
 
-app.get('/images', (res,res) => {
+app.get('/images', function (res,res){
     fs.readdir(path.join(__dirname,"./public/images/uploaded"), 
     function(err, items){
         if(items.length > 0){

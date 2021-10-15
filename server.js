@@ -98,33 +98,6 @@ app.get("/employees", function(req,res)
 }
 });
 
-app.get("/managers", function(req,res) 
-{
-    data.getManagers()
-    .then(function(data) 
-    {
-        res.json(data);
-    })
-    .catch(function(err) 
-    {
-        res.json({message: err});
-    });
-});
-
-
-app.get("/departments", function(req,res) 
-{
-    data.getDepartments()
-    .then(function(data) 
-    {
-        res.json(data);
-    })
-    .catch(function(err) 
-    {
-        res.json({message: err});
-    });
-});
-
 app.get("/employees/add", function(req, res)
 {
     res.sendFile(path.join(__dirname,"/views/addEmployee.html"));
@@ -154,6 +127,34 @@ app.get('/employees/:employeeNum',function(req, res){
         });
     }
 });
+
+app.get("/managers", function(req,res) 
+{
+    data.getManagers()
+    .then(function(data) 
+    {
+        res.json(data);
+    })
+    .catch(function(err) 
+    {
+        res.json({message: err});
+    });
+});
+
+
+app.get("/departments", function(req,res) 
+{
+    data.getDepartments()
+    .then(function(data) 
+    {
+        res.json(data);
+    })
+    .catch(function(err) 
+    {
+        res.json({message: err});
+    });
+});
+
 
 app.get("/images/add", function(req,res) 
 {

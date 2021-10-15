@@ -1,6 +1,4 @@
 var fs = require('fs');
-const { resolve } = require('path');
-const { addEmployee } = require('../../../../example/WEb/WEB322-assignment3-master/WEB322-assignment3-master/data-service');
 
 var employees = [];
 var departments = [];
@@ -111,6 +109,7 @@ module.exports =
             {
                 employeeData.isManager = false;
             }
+
             employeeData.employeeNum = employees.length +1;
             employees.push(employeeData);
             resolve("Employee data is added.");
@@ -120,7 +119,7 @@ module.exports =
 
     getEmployeesByStatus: function(status)
     {
-        let promise = new Promise(function(resovle, reject)
+        let promise = new Promise(function(resolve, reject)
         {
             status = status.toLowerCase();
             if(status == "full time" || status == "part time")
@@ -155,11 +154,10 @@ module.exports =
 
     getEmployeesByDepartment: function(department)
     {
-        let promise = new Promise(function(resovle, reject)
+        let promise = new Promise(function(resolve, reject)
         {   
-            if(department > 0 && department <= 7)
+            if(0 < department && department <= 7)
             {
-
                 let empDepartment = [];
                 let value = "department";
     

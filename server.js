@@ -20,6 +20,15 @@ var path = require("path");
 var HTTP_PORT = process.env.PORT || 8080;
 
 
+const storage = multer.diskStorage({
+    destination: "./public/images/uploaded",
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + path.extname(file.originalname));
+    }
+  });
+
+  const upload = multer({ storage: storage });
+
 
 app.get("/", function(req, res)
 {
@@ -105,27 +114,16 @@ data.initialize()
 });
 
 
-const storage = multer.diskStorage({
-    destination: "./public/images/uploaded",
-    filename: function (req, file, cb) {
-
-      cb(null, Date.now() + path.extname(file.originalname));
-    }
-  });
-
-  const upload = multer({ storage: storage });
-
-  app.post('/images/add', upload.single("imageFile"), function(req, res){
-      res.redirect("/images");
-  });
+app.post("/images/add", upload.single("imageFile"), function(req, res) {
+    res.redirect('/images');
+});
 
 
-
-app.get('/images', function (res,res){
+app.get("/images", function(res,res){
     fs.readdir(path.join(__dirname,"./public/images/uploaded"), 
     function(err, items){
         if(items.length > 0){
-            res.json({images: items});
+            res.json({images : items});
         }
         else
         {

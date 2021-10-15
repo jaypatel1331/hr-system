@@ -14,21 +14,25 @@
 var data = require('./data-service.js');
 var express = require("express");
 var multer = require("multer");
+var bodyParser = require("body-parser");
 var fs = require('fs');
 var app = express();
 var path = require("path");
 var HTTP_PORT = process.env.PORT || 8080;
 
 
+app.use(express.static('public'));
+
+app.use(bodyParser.urlencoded({extended: true}));
+
 const storage = multer.diskStorage({
     destination: "./public/images/uploaded",
     filename: function (req, file, cb) {
       cb(null, Date.now() + path.extname(file.originalname));
     }
-  });
+});
 
-  const upload = multer({ storage: storage });
-
+const upload = multer({ storage: storage });
 
 app.get("/", function(req, res)
 {
@@ -39,16 +43,6 @@ app.get("/", function(req, res)
 app.get("/about", function(req, res)
 {
     res.sendFile(path.join(__dirname,"/views/about.html"));
-});
-
-app.get("/employees/add", function(req, res)
-{
-    res.sendFile(path.join(__dirname,"/views/addEmployee.html"));
-});
-
-app.get("/images/add", function(req, res)
-{
-    res.sendFile(path.join(__dirname,"/views/addImage.html"));
 });
 
 app.get("/employees", function(req,res)
@@ -92,8 +86,35 @@ app.get("/departments", function(req,res)
     });
 });
 
+app.get("/employees/add", function(req, res)
+{
+    res.sendFile(path.join(__dirname,"/views/addEmployee.html"));
+});
 
-app.use(express.static('public'));
+app.post("/employees/add", function(req,res){
+    data.addEmployee(req.body)
+    .then(res.redirect('/employees'));
+});
+
+app.get("/images/add", function(req,res) {
+    res.sendFile(path.join(__dirname,"/views/addImage.html"));
+});
+
+app.post("/images/add", upload.single("imageFile"), function(req, res) {
+    res.redirect('/images');
+});
+
+// route for /images
+app.get("/images", function(req,res) {
+    fs.readdir(path.join(__dirname,"/public/images/uploaded"), 
+    function(err, items) {
+        if (items.length > 0) {
+            res.json({images : items});
+        } else {
+            res.json({message : "There is currently no images"});
+        }
+    });
+});
 
 
 app.use(function(req,res,next) 
@@ -111,23 +132,4 @@ data.initialize()
 .catch(function(err) 
 {
     console.log(err);
-});
-
-
-app.post("/images/add", upload.single("imageFile"), function(req, res) {
-    res.redirect('/images');
-});
-
-
-app.get("/images", function(res,res){
-    fs.readdir(path.join(__dirname,"./public/images/uploaded"), 
-    function(err, items){
-        if(items.length > 0){
-            res.json({images : items});
-        }
-        else
-        {
-            res.json({message: "Sorry, Nothing here !"});
-        }
-    })
 });

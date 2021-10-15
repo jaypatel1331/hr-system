@@ -1,4 +1,5 @@
 var fs = require('fs');
+const { addEmployee } = require('../../../../example/WEb/WEB322-assignment3-master/WEB322-assignment3-master/data-service');
 
 var employees = [];
 var departments = [];
@@ -100,4 +101,19 @@ module.exports = {
 
         return promise;
     },
+
+    addEmployee: function(employeeData){
+        let promise = new Promise(function(resolve,reject){
+
+            if(!employeeData.isManager)
+            {
+                employeeData.isManager = false;
+            }
+            employeeData.employeeNum = employees.length +1;
+            employees.push(employeeData);
+            resolve("Employee data is added.");
+        });
+        return promise;
+    },
 };
+

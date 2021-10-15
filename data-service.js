@@ -221,7 +221,7 @@ module.exports =
         return promise;
     },
 
-    getEmployeesByNum: function(num) 
+    getEmployeeByNum: function(num) 
     {
         let promise = new Promise(function(resolve, reject) 
         {

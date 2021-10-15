@@ -166,7 +166,6 @@ app.post("/images/add", upload.single("imageFile"), function(req, res)
     res.redirect('/images');
 });
 
-// route for /images
 app.get("/images", function(req,res) 
 {
     fs.readdir(path.join(__dirname,"/public/images/uploaded"), 

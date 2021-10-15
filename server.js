@@ -27,7 +27,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 const storage = multer.diskStorage({
     destination: "./public/images/uploaded",
-    filename: function (req, file, cb) {
+    filename: function (req, file, cb)
+    {
       cb(null, Date.now() + path.extname(file.originalname));
     }
 });
@@ -47,6 +48,44 @@ app.get("/about", function(req, res)
 
 app.get("/employees", function(req,res)
  {
+    if(req.query.status)
+    {
+        data.getEmployeesByStatus(req.query.status)
+        .then(function(value) 
+        {
+            res.json(value);
+        })
+        .catch(function(err) 
+        {
+            res.json({message : err});
+        });
+    }
+    else if(req.query.department)
+    {
+        data.getEmployeesByDepartment(req.query.department)
+        .then(function(value)
+        {
+            res.json(value);
+        })
+        .catch(function(err)
+        {
+            res.json({message : err});
+        });
+    }
+    else if(req.query.manager)
+    {
+        data.getEmployeesByManager(req.query.manager)
+        .then(function(value)
+        {
+            res.json(value);
+        })
+        .catch(function(err)
+        {
+            res.json({message : err});
+        });
+    }
+    else
+    {
     data.getAllEmployees()
     .then(function(data) 
     {
@@ -56,7 +95,7 @@ app.get("/employees", function(req,res)
     {
         res.json({message: err});
     });
-    
+}
 });
 
 app.get("/managers", function(req,res) 
@@ -91,26 +130,53 @@ app.get("/employees/add", function(req, res)
     res.sendFile(path.join(__dirname,"/views/addEmployee.html"));
 });
 
-app.post("/employees/add", function(req,res){
+app.post("/employees/add", function(req,res)
+{
     data.addEmployee(req.body)
     .then(res.redirect('/employees'));
 });
 
-app.get("/images/add", function(req,res) {
+app.get('/employees/:employeeNum',function(req, res){
+    if(isNaN(req.params.employeeNum))
+    {
+        res.redirect("/employees");
+    }
+    else
+    {
+        data.getEmployeeByNum(req.params.employeeNum)
+        .then(function(value)
+        {
+            res.json(value);
+        })
+        .catch(function(err) 
+        {
+            res.json({message : err});            
+        });
+    }
+});
+
+app.get("/images/add", function(req,res) 
+{
     res.sendFile(path.join(__dirname,"/views/addImage.html"));
 });
 
-app.post("/images/add", upload.single("imageFile"), function(req, res) {
+app.post("/images/add", upload.single("imageFile"), function(req, res) 
+{
     res.redirect('/images');
 });
 
 // route for /images
-app.get("/images", function(req,res) {
+app.get("/images", function(req,res) 
+{
     fs.readdir(path.join(__dirname,"/public/images/uploaded"), 
-    function(err, items) {
-        if (items.length > 0) {
+    function(err, items) 
+    {
+        if (items.length > 0) 
+        {
             res.json({images : items});
-        } else {
+        } 
+        else 
+        {
             res.json({message : "There is currently no images"});
         }
     });

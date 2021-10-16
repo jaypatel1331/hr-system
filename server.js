@@ -40,7 +40,6 @@ app.get("/", function(req, res)
     res.sendFile(path.join(__dirname,"/views/home.html"));
 });
 
-
 app.get("/about", function(req, res)
 {
     res.sendFile(path.join(__dirname,"/views/about.html"));
@@ -141,7 +140,6 @@ app.get("/managers", function(req,res)
     });
 });
 
-
 app.get("/departments", function(req,res) 
 {
     data.getDepartments()
@@ -154,7 +152,6 @@ app.get("/departments", function(req,res)
         res.json({message: err});
     });
 });
-
 
 app.get("/images/add", function(req,res) 
 {
@@ -182,12 +179,10 @@ app.get("/images", function(req,res)
     });
 });
 
-
 app.use(function(req,res,next) 
 {
     res.status(404).send('Page not found, Error: 404');
 });
-
 
 data.initialize()
 .then(function(message)

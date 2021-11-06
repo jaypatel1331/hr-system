@@ -1,5 +1,4 @@
 /*Body layout */
-
 body {
     box-sizing: border-box;
     background: linear-gradient(132deg, #FC415A, #591BC5, #212335);
@@ -9,7 +8,6 @@ body {
     position: relative;
     height: 100vh;
     width: 100%;
-    overflow: hidden;
     padding:0;
     margin:0px;
   }
@@ -87,4 +85,9 @@ nav ul li {
    background: #fff;
     text-decoration: none;
     transform: skew(15deg);
+  }
+
+  td a {
+    color:white;
+    text-decoration: none;
   }

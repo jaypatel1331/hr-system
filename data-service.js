@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+
 var sequelize = new Sequelize('d85e30o5q13tsf', 'xodxiqfsnytfrx', '43db4ce3b0f3fc9306de4b97f4c170d8c7e632d2fa085dd1c7db30fbbc5cacaf', {
     host: 'ec2-34-237-46-61.compute-1.amazonaws.com',
     dialect: 'postgres',
@@ -232,5 +233,4 @@ module.exports =
         });
         return promise;
     }
-
 };

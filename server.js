@@ -101,6 +101,7 @@ app.get("/employees/add", function (req, res) {
     res.render('addEmployee');
 });
 
+
 app.post("/employees/add", function (req, res) {
     data.addEmployee(req.body)
         .then(res.redirect('/employees'));
@@ -131,6 +132,34 @@ app.get("/departments", function (req, res) {
             res.render('departments', { departments: value });
         })
         .catch(err => res.status(404).send('no results'));
+});
+
+app.get("/departments/add", (req,res) => {
+    res.render(path.join(__dirname + "/views/addDepartment.hbs"));
+});
+
+app.post("/departments/add", (req,res) => {
+    data.addDepartment(req.body).then(() => {
+        res.redirect("/departments");
+    })
+});
+
+app.post("/department/update", (req,res) => {
+    data.updateDepartment(req.body).then(() => {
+        res.redirect("/departments");
+    })
+});
+
+app.get("/department/:departmentId", (req, res) =>{
+    data.getDepartmentById(req.params.departmentId)
+    .then((data) => {res.render("department", { department: data })})
+    .catch(err => res.status(404).send("department not found"))
+});
+
+app.get('/departments/delete/:departmentId', (req,res) => {
+    data.deleteDepartmentById(req.params.departmentId)
+    .then(res.redirect("/departments"))
+    .catch(err => res.status(500).send("Unable to Remove Department / Department not found"))
 });
 
 app.get("/images/add", function (req, res) {

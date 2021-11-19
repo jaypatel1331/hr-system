@@ -220,17 +220,17 @@ module.exports =
         return promise;
     },
 
-    getManagers : function(){
+    deleteEmployeeByNum : function(num){
         let promise = new Promise((resolve,reject) => {
-            Employee.findAll({
+            Employee.destroy({
                 where: {
-                    isManager:true
+                    employeeNum: num
                 }
             })
-            .then(resolve(Employee.findAll({ where: { isManager: true }})))
-            .catch(reject('no results returned'));
+            .then(resolve())
+            .catch(reject('unable to delete employee'));
         });
-         return promise;
+        return promise;
     }
 
 };

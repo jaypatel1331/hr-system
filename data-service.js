@@ -160,6 +160,76 @@ module.exports =
         });
 
         return promise;
+    },
+
+    addDepartment : function (departmentData) {
+        let promise = new Promise(function (resolve,reject){
+            for (var i in departmentData) {
+                if (departmentData[i] == "") { departmentData[i] = null; }
+            }
+    
+            Department.create(departmentData)
+            .then(resolve(Department.findAll()))
+            .catch(reject('unable to add department'));
+        });
+        return promise;
+
+    },
+
+    updateDepartment : function (departmentData){
+        let promise = new Promise(function (resolve,reject){
+            for (var i in departmentData) {
+                if (departmentData[i] == "") { departmentData[i] = null; }
+            }
+    
+            sequelize.sync()
+            .then(Department.update(departmentData, {where: { 
+                departmentId: departmentData.departmentId
+            }}))
+            .then(resolve(Department.update(departmentData, {where: { departmentId:departmentData.departmentId }})))
+            .catch(reject('unable to update department'));
+        });
+        return promise;
+
+    },
+
+    getDepartmentById : function(id){
+        let promise = new Promise(function(resolve,reject){
+            Department.findAll({ 
+                where: {
+                    departmentId: id
+                }
+            })
+            .then(resolve(Department.findAll({ where: { departmentId: id }})))
+            .catch(reject('no results returned'));
+        });
+        return promise;
+    },
+
+    deleteDepartmentById : function(id){
+        let promise = new Promise(function(resolve,reject){
+            Department.destroy({ 
+                where: {
+                    departmentId: id
+                }
+            })
+            .then(resolve(Department.destroy({ where: { departmentId: id }})))
+            .catch(reject('no results returned'));
+        });
+        return promise;
+    },
+
+    getManagers = () => {
+        let promise = new Promise((resolve,reject) => {
+            Employee.findAll({
+                where: {
+                    isManager:true
+                }
+            })
+            .then(resolve(Employee.findAll({ where: { isManager: true }})))
+            .catch(reject('no results returned'));
+        });
+         return promise;
     }
 
 };

@@ -90,7 +90,6 @@ app.get("/employees", function (req, res) {
             .then((value) => res.render('employees', { employees: value }))
             .catch(err => res.status(404).send('no results'));
     }
-
     else {
         data.getAllEmployees()
         .then(value => res.render("employees", { employees: value }))

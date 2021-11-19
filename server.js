@@ -78,23 +78,23 @@ app.get("/employees", function (req, res) {
     if (req.query.status) {
         data.getEmployeesByStatus(req.query.status)
             .then((value) => res.render('employees', { employees: value }))
-            .catch((err) => res.render('employees', { message: err }));
+            .catch(err => res.status(404).send('no results'));
 
     } else if (req.query.department) {
         data.getEmployeesByDepartment(req.query.department)
             .then((value) => res.render('employees', { employees: value }))
-            .catch((err) => res.render('employees', { message: err }));
+            .catch(err => res.status(404).send('no results'));
 
     } else if (req.query.manager) {
         data.getEmployeesByManager(req.query.manager)
             .then((value) => res.render('employees', { employees: value }))
-            .catch((err) => res.render('employees', { message: err }));
+            .catch(err => res.status(404).send('no results'));
     }
 
     else {
         data.getAllEmployees()
             .then((value) => res.render('employees', { employees: value }))
-            .catch((err) => res.render('employees', { message: err }));
+            .catch(err => res.status(404).send('no results'));
     }
 });
 

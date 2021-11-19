@@ -219,7 +219,7 @@ module.exports =
         return promise;
     },
 
-    getManagers = () => {
+    getManagers : function(){
         let promise = new Promise((resolve,reject) => {
             Employee.findAll({
                 where: {

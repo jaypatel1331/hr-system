@@ -4,8 +4,9 @@ var sequelize = new Sequelize('d85e30o5q13tsf', 'xodxiqfsnytfrx', '43db4ce3b0f3f
     dialect: 'postgres',
     port: 5432,
     dialectOptions: {
-        ssl: true
-    }
+        ssl: { rejectUnauthorized: false }
+    },
+    query: { raw: true }
 });
 
 const Employee = sequelize.define('employee', {

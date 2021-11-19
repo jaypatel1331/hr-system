@@ -93,7 +93,7 @@ app.get("/employees", function (req, res) {
 
     else {
         data.getAllEmployees()
-        .then(data => res.render("employees", { employees: data }))
+        .then(value => res.render("employees", { employees: value }))
             .catch(err => res.status(404).send('no results'));
     }
 });
@@ -131,9 +131,7 @@ app.get("/departments", function (req, res) {
         .then(function (value) {
             res.render('departments', { departments: value });
         })
-        .catch(function (err) {
-            res.render('departments', { message: err });
-        });
+        .catch(err => res.status(404).send('no results'));
 });
 
 app.get("/images/add", function (req, res) {

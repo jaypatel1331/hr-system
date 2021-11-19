@@ -93,7 +93,7 @@ app.get("/employees", function (req, res) {
 
     else {
         data.getAllEmployees()
-            .then((value) => res.render('employees', { employees: value }))
+        .then(data => res.render("employees", { employees: data }))
             .catch(err => res.status(404).send('no results'));
     }
 });

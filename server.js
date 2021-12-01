@@ -12,13 +12,18 @@
 ********************************************************************************/
 
 var data = require('./data-service.js');
+var dataServiceAuth = require('./data-service-auth.js');
+
+var clientSessions = require("client-sessions");
 var express = require("express");
 var multer = require("multer");
 var bodyParser = require("body-parser");
-var fs = require('fs');
-var app = express();
+var fs = require("fs");
 var path = require("path");
-const exphbs = require('express-handlebars');
+const exphbs = require("express-handlebars");
+
+var app = express();
+
 
 var HTTP_PORT = process.env.PORT || 8080;
 
@@ -66,6 +71,26 @@ app.use(function (req, res, next) {
 
 const upload = multer({ storage: storage });
 
+app.use(clientSessions({
+    cookieName: "session",
+    secret: "Web_assignment_6",
+    duration: 2 * 60 * 1000,
+    activeDuration: 1000 * 60 
+}));
+
+app.use(function(req, res, next) {
+    res.locals.session = req.session;
+    next();
+   });
+
+   function ensureLogin(req, res, next) {
+    if (!req.session.user) {
+        res.redirect("/login");
+    } else {
+        next();
+    }
+}
+
 app.get("/", function (req, res) {
     res.render('home');
 });
@@ -74,7 +99,7 @@ app.get("/about", function (req, res) {
     res.render('about');
 });
 
-app.get("/employees", function (req, res) {
+app.get("/employees",ensureLogin, function (req, res) {
     if (req.query.status) {
         data.getEmployeesByStatus(req.query.status)
             .then((value) => res.render('employees', { employees: value }))
@@ -97,19 +122,19 @@ app.get("/employees", function (req, res) {
     }
 });
 
-app.get("/employees/add", function (req, res) {
+app.get("/employees/add", ensureLogin, function (req, res) {
     data.getDepartments()
         .then(data => res.render("addEmployee", { departments: data }))
         .catch(err => res.render("addEmployee", { departments: [] }));
 });
 
 
-app.post("/employees/add", function (req, res) {
+app.post("/employees/add", ensureLogin, function (req, res) {
     data.addEmployee(req.body)
         .then(res.redirect('/employees'));
 });
 
-app.get("/employee/:empNum", (req, res) => {
+app.get("/employee/:empNum", ensureLogin, (req, res) => {
     // initialize an empty object to store the values
     let viewData = {};
     data.getEmployeeByNum(req.params.empNum).then((data) => {
@@ -142,17 +167,17 @@ app.get("/employee/:empNum", (req, res) => {
         });
 });
 
-app.post("/employee/update", (req, res) => {
+app.post("/employee/update", ensureLogin, (req, res) => {
     data.updateEmployee(req.body).then(res.redirect("/employees"));
 });
 
-app.get('/employees/delete/:value', (req, res) => {
+app.get('/employees/delete/:value', ensureLogin, (req, res) => {
     data.deleteEmployeeByNum(req.params.value)
         .then(res.redirect("/employees"))
         .catch(err => res.status(500).send("Unable to Remove Employee / Employee not found"));
 });
 
-app.get("/departments", function (req, res) {
+app.get("/departments", ensureLogin, function (req, res) {
     data.getDepartments()
         .then(function (value) {
             res.render('departments', { departments: value });
@@ -160,47 +185,80 @@ app.get("/departments", function (req, res) {
         .catch(err => res.status(404).send('no results'));
 });
 
-app.get("/departments/add", (req, res) => {
+app.get("/departments/add", ensureLogin, (req, res) => {
     res.render(path.join(__dirname + "/views/addDepartment.hbs"));
 });
 
-app.post("/departments/add", (req, res) => {
+app.post("/departments/add", ensureLogin, (req, res) => {
     data.addDepartment(req.body).then(() => {
         res.redirect("/departments");
     })
 });
 
-app.post("/department/update", (req, res) => {
+app.post("/department/update", ensureLogin, (req, res) => {
     data.updateDepartment(req.body).then(() => {
         res.redirect("/departments");
     })
 });
 
-app.get("/department/:departmentId", (req, res) => {
+app.get("/department/:departmentId", ensureLogin, (req, res) => {
     data.getDepartmentById(req.params.departmentId)
         .then((data) => { res.render("department", { department: data }) })
         .catch(err => res.status(404).send("department not found"))
 });
 
-app.get('/departments/delete/:departmentId', (req, res) => {
+app.get('/departments/delete/:departmentId', ensureLogin, (req, res) => {
     data.deleteDepartmentById(req.params.departmentId)
         .then(res.redirect("/departments"))
         .catch(err => res.status(500).send("Unable to Remove Department / Department not found"))
 });
 
-app.get("/images/add", function (req, res) {
+app.get("/images/add", ensureLogin, function (req, res) {
     res.render('addImage');
 });
 
-app.post("/images/add", upload.single("imageFile"), function (req, res) {
+app.post("/images/add", ensureLogin, upload.single("imageFile"), function (req, res) {
     res.redirect('/images');
 });
 
-app.get("/images", function (req, res) {
+app.get("/images", ensureLogin, function (req, res) {
     fs.readdir(path.join(__dirname, "/public/images/uploaded"),
         function (err, items) {
             res.render('images', { images: items });
         });
+});
+
+app.get("/login", function(req, res) {
+    res.render('login');
+});
+
+app.get("/register", function(req, res) { 
+    res.render('register');
+});
+
+app.post("/register", function(req, res) {
+    dataServiceAuth.registerUser(req.body)
+    .then(() => res.render('register', { successMsg: "User created!"}))
+    .catch((err) => res.render('register', { errorMsg: err, userName: req.body.userName }));
+});
+
+app.post("/login", function(req, res) {
+    req.body.userAgent = req.get('User-Agent');
+
+    dataServiceAuth.checkUser(req.body)
+    .then(function(user) { 
+        req.session.user = {
+            userName: user.userName,
+            email: user.email,
+            loginHistory: user.loginHistory
+        }
+
+        res.redirect('/employees');
+    })
+    .catch(function(err) {
+        console.log(err);
+        res.render('login', { errorMsg: err, userName: req.body.userName });
+    });
 });
 
 app.use(function (req, res, next) {
@@ -208,6 +266,7 @@ app.use(function (req, res, next) {
 });
 
 data.initialize()
+.then(dataServiceAuth.initialize)
     .then(function (message) {
         console.log(message);
         app.listen(HTTP_PORT);

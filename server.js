@@ -11,21 +11,19 @@
 *
 ********************************************************************************/
 
-var data = require('./data-service.js');
-var dataServiceAuth = require('./data-service-auth.js');
+const data = require('./data-service.js');
+const dataServiceAuth = require('./data-service-auth.js');
 
-var clientSessions = require("client-sessions");
-var express = require("express");
-var multer = require("multer");
-var bodyParser = require("body-parser");
-var fs = require("fs");
-var path = require("path");
+const clientSessions = require("client-sessions");
+const express = require("express");
+const multer = require("multer");
+const bodyParser = require("body-parser");
+const fs = require("fs");
+const path = require("path");
 const exphbs = require("express-handlebars");
+const app = express();
 
-var app = express();
-
-
-var HTTP_PORT = process.env.PORT || 8080;
+const HTTP_PORT = process.env.PORT || 8080;
 
 
 app.use(express.static('public'));
@@ -253,7 +251,7 @@ app.post("/login", function(req, res) {
             loginHistory: user.loginHistory
         }
 
-        res.redirect('/employees');
+        res.redirect("/employees");
     })
     .catch(function(err) {
         console.log(err);

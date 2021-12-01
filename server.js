@@ -238,8 +238,8 @@ app.get("/register", function(req, res) {
 
 app.post("/register", function(req, res) {
     dataServiceAuth.registerUser(req.body)
-    .then(() => res.render('register', { successMsg: "User created!"}))
-    .catch((err) => res.render('register', { errorMsg: err, userName: req.body.userName }));
+    .then(() => res.render('register', { successMessage: "User created!"}))
+    .catch((err) => res.render('register', { errorMessage: err, userName: req.body.userName }));
 });
 
 app.post("/login", function(req, res) {
@@ -257,9 +257,18 @@ app.post("/login", function(req, res) {
     })
     .catch(function(err) {
         console.log(err);
-        res.render('login', { errorMsg: err, userName: req.body.userName });
+        res.render('login', { errorMessage: err, userName: req.body.userName });
     });
 });
+
+app.get("/logout", function(req, res) {
+    req.session.reset();
+    res.redirect('/');
+});
+
+app.get("/userHistory", ensureLogin, function (req, res) {
+    res.render('userHistory');
+}); 
 
 app.use(function (req, res, next) {
     res.status(404).send('Page not found, Error: 404');

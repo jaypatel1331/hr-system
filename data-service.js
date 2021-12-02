@@ -160,7 +160,6 @@ module.exports =
                 .then(resolve(Employee.update(employeeData, { where: { employeeNum: employeeData.employeeNum } })))
                 .catch(reject('unable to update employee'));
         });
-
         return promise;
     },
 

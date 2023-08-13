@@ -6,28 +6,29 @@
             <table class="table ">
                 <thead>
                     <tr>
-                        <th>Employee Num</th>
+                        <th>Employee ID</th>
                         <th>Full Name</th>
                         <th>Email</th>
-                        <th>Address</th>
+                        <th>PhoneNumber</th>
+                        <th>Hire Date</th>
+                        <th>Job ID</th>
+                        <th>Salary</th>
                         <th>Manager ID</th>
-                        <th>Status</th>
-                        <th>Department</th>
-                        <th>Hired On</th>
+                        <th>Department ID</th>
                     </tr>
                 </thead>
                 <tbody>
                     {{#each employees}}
                         <tr>
-                            <td>{{employeeNum}}</td>
-                            <td><a href="/employees/{{employeeNum}}">{{firstName}} {{lastName}}</a></td>
-                            <td><a href="mailto:{{email}}">{{email}}</a></td>
-                            <td>{{addressStreet}} {{addressCity}} {{addressState}} {{adderssPostal}}</td>
-                            <td><a href="/employees?manager={{employeeManagerNum}}">{{employeeManagerNum}}</a></td>
-                            <td><a href="/employees?status={{status}}">{{status}}</a></td>
-                            <td><a href="/employees?department={{department}}">{{department}}</a></td>
-                            <td>{{hireDate}}</td>
-                            <td><a class="btn btn-danger" href="/employees/delete/{{this.employeeNum}}">remove</a></td>
+                            <td>{{0}}</td>                            
+                            <td><a href="/employees/{{0}}">{{1}} {{2}}</a></td>
+                            <td>{{3}}</td>
+                            <td>{{4}}</td>
+                            <td>{{5}}</td>
+                            <td>{{6}}</td>
+                            <td>{{7}}</td>
+                            <td>{{9}}</td>
+                            <td>{{10}}</td>
                         </tr>
                     {{/each}}
                 </tbody>

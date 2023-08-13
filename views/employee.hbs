@@ -1,111 +1,66 @@
 
 <div class="row">
-    <div class="col-md-12"> {{#each viewData.employee}}
-        <h1>{{firstName}} {{lastName}} - Employee: {{employeeNum}}</h1>
+    <div class="col-md-12"> {{#each employees}}
+        <h1>Employee ID: {{0}}</h1>
         <form method="POST" action="/employee/update">
         <fieldset>
             <legend>Personal Information</legend>
-            <input type="hidden" name="employeeNum" value="{{employeeNum}}">
+            <input type="hidden" name="employee_id" value="{{0}}">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="firstName">First Name:</label>
-                        <input class="form-control" id="firstName" name="firstName" type="text" value="{{firstName}}" />
+                        <input class="form-control" id="firstName" name="firstName" type="text" value="{{1}}" readonly/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="lastName">Last Name:</label>
-                        <input class="form-control" id="lastName" name="lastName" type="text" value="{{lastName}}" />
+                        <input class="form-control" id="lastName" name="lastName" type="text" value="{{2}}" readonly/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="email">Email:</label>
-                        <input class="form-control" id="email" name="email" type="email" value="{{email}}" />
+                        <input class="form-control" id="email" name="email" type="text" value="{{3}}" />
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="SSN">Social Security Number (SSN):</label>
-                        <input class="form-control" id="SSN" name="SSN" type="text" value="{{SSN}}" readonly />
+                        <label for="phone">Phone Number:</label>
+                        <input class="form-control" id="phone" name="phone" type="text" value="{{4}}" />
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="addressStreet">Address:</label>
-                        <input class="form-control" id="addressStreet" name="addressStreet" type="text" value="{{addressStreet}}" />
+                        <label for="hiredate">Hire Date:</label>
+                        <input class="form-control" id="hiredate" name="hiredate" type="text" value="{{5}}" readonly/>
                     </div>
                 </div>
+                
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="addressCity">City:</label>
-                        <input class="form-control" id="addresscity" name="addressCity" type="text" value="{{addressCity}}" />
+                        <label for="job_id">Job ID:</label>
+                        <input class="form-control" id="job_id" name="job_id" type="text" value="{{6}}" readonly/>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="addressState">State:</label>
-                        <input class="form-control" id="addressState" name="addressState" type="text" value="{{addressState}}" />
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="addressPostal">ZIP Code:</label>
-                        <input class="form-control" id="addressPostal" name="addressPostal" type="text" value="{{addressPostal}}" />
-                    </div>
-                </div>
-            </div>
 
-            <legend>Company Information</legend>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="isManager">Manager:</label>
-                        <input class="form-control" id="isManager" name="isManager" type="checkbox" {{#if isManager}} checked {{/if}} />
+               <div class="col-md-3">
+                        <label for="salary">Salary:</label>
+                        <input class="form-control" id="salary" name="salary" type="text" value="{{7}}">
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="employeeManagerNum">Manager's Number:</label>
-                        <input class="form-control" id="employeeManagerNum" name="employeeManagerNum" type="number" value="{{employeeManagerNum}}" />
+                    <div class="col-md-3">
+                        <label for="departmentId">Hire Date:</label>
+                        <input class="form-control" id="departmentId" name="departmentId" type="text" value="{{10}}" readonly>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="status">Status:</label><br>
-                        <label class="checkbox-inline">
-                            <input type="radio" id="statusFT" name="status" value="Full Time" {{#equal status "Full Time"}}checked{{/equal}} /> Full Time
-                        </label>
-
-                        <label class="checkbox-inline">
-                            <input type="radio" id="statusPT" name="status" value="Part Time"  {{#equal status "Part Time"}}checked{{/equal}}/> Part Time
-                        </label>
-                    </div>
-                </div>
-                {{/each}}
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="department">Department:</label>
-                        {{#if viewData.departments}}
-                        <select class="form-control" name="department" id="department">
-                            {{#each viewData.departments}}
-                            <option value="{{departmentId}}" {{#if selected}} selected {{/if}}>{{departmentName}}</option>
-                            {{/each}}
-                        </select>
-                        {{else}}
-                        <div>No Departments</div>
-                        {{/if}}
-                    </div>
-                </div>
-                <div class="col-md-12"> {{#each viewData.employee}}
-                    <div class="form-group">
-                        <label for="hireDate">Hire Date:</label>
-                        <input class="form-control" id="hireDate" name="hireDate" type="text" value="{{viewData.employee.hireDate}}" readonly />
-                    </div>
-                </div>
             </div>
-        </fieldset>
+            <div>
+                <div class="col-md-3">
+                        <label for="managerID">Hire Date:</label>
+                        <input class="form-control" id="managerId" name="managerId" type="text" value="{{9}}" readonly>
+                    </div>
+
+            </div>
         <hr />
         <input type="submit" class="btn btn-primary pull-right" value="Update Employee" /><br /><br /><br />
         </form> {{/each}}

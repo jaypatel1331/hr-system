@@ -1,0 +1,33 @@
+
+<div class="row">
+    <div class="col-md-12"> {{#each jobs}}
+        <h1>Job ID: {{0}}</h1>
+        <form method="POST" action="/job/update">
+        <fieldset>
+            <input type="hidden" name="jobId" value="{{0}}">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="jobTitle">Job Title:</label>
+                        <input class="form-control" id="jobTitle" name="jobTitle" type="text" value="{{1}}" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="min_salary">Minimum Salary:</label>
+                        <input class="form-control" id="min_salary" name="min_salary" type="text" value="{{2}}" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="max_salary">Maximum Salary:</label>
+                        <input class="form-control" id="max_salary" name="max_salary" type="max_salary" value="{{3}}" />
+                    </div>
+                </div>
+                </div>
+        </fieldset>
+        <hr />
+        <input type="submit" class="btn btn-primary pull-right" value="Update Job" /><br /><br /><br />
+        </form> {{/each}}
+    </div>
+</div>

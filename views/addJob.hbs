@@ -1,0 +1,35 @@
+<div class="container">
+<div class="row">
+    <div class="col-md-12">
+        <h1>Job ID:</h1>
+        <form method="POST" action="/jobs/add">
+        <fieldset>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="jobID">Job ID:</label>
+                        <input class="form-control" id="jobID" name="jobID" type="text"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="jobTitle">Job Title:</label>
+                        <input class="form-control" id="jobTitle" name="jobTitle" type="text"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="min_salary">Minimum Salary:</label>
+                        <input class="form-control" id="min_salary" name="min_salary" type="text" />
+                    </div>
+                </div>
+                </div>
+        </fieldset>
+        <hr />
+        <input type="submit" class="btn btn-primary pull-right" value="Add Job" /><br /><br /><br />
+        <a type="cancel" href="/jobs" class="btn btn-primary pull-left" value="Cancel"><h4>Cancel</h4></a>
+
+        </form>
+    </div>
+</div>
+</div>
